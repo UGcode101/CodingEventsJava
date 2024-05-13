@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body class="container">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>Create Event</title>
+</head>
+<body>
+<h1 th:text="${title}">Create Event</h1>
+<form th:action="@{/events/create}" th:object="${event}" method="post">
+   <label for="name">Event Name:</label>
+   <input type="text" th:field="*{name}" id="name" />
+   <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
 
-<header th:replace="fragments :: header"></header>
+   <label for="description">Description:</label>
+   <textarea th:field="*{description}" id="description"></textarea>
+   <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</div>
 
-<form method="post">
-   <div class="form-group">
-      <label>Name
-         <input th:field="${event.name}" class="form-control">
-      </label>
-      <p class="error" th:errors="${event.name}"></p>
-   </div>
-   <div class="form-group">
-      <label>Description
-         <input th:field="${event.description}" class="form-control">
-      </label>
-      <p class="error" th:errors="${event.description}"></p>
-   </div>
-   <div class="form-group">
-      <label>Contact Email
-         <input th:field="${event.contactEmail}" class="form-control">
-      </label>
-      <p class="error" th:errors="${event.contactEmail}"></p>
-   </div>
-   <div class="form-group">
-      <input type="submit" value="Create" class="btn btn-success">
-   </div>
+   <label for="contactEmail">Contact Email:</label>
+   <input type="email" th:field="*{contactEmail}" id="contactEmail" />
+   <div th:if="${#fields.hasErrors('contactEmail')}" th:errors="*{contactEmail}">Email Error</div>
+
+   <label for="type">Event Type:</label>
+   <select th:field="*{eventType}" id="type">
+      <option th:each="type : ${types}" th:value="${type.name()}" th:text="${type.displayName}"></option>
+   </select>
+
+   <button type="submit">Submit</button>
 </form>
-
 </body>
 </html>

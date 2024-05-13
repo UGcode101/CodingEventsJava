@@ -24,15 +24,20 @@ public class Event {
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    private EventType eventType;
+
+    public Event(String name, String description, String contactEmail, EventType eventType) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
-        this.id = nextId;
-        nextId++;
+        this.eventType = eventType;
     }
 
-    public Event() {}
+    public Event() {
+        this.id = nextId;
+        this.id = nextId++;
+    }
 
     public String getName() {
         return name;
@@ -62,6 +67,14 @@ public class Event {
         return id;
     }
 
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -70,7 +83,7 @@ public class Event {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Event)) return false;
         Event event = (Event) o;
         return id == event.id;
     }
